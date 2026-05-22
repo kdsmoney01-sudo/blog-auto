@@ -1,0 +1,25 @@
+# 시크릿·토큰 절대 커밋 X
+.env
+.env.local
+*.env
+blogger_token.json
+oauth_client.json
+client_secret_*.json
+
+# 로그
+_logs/
+*.log
+
+# 작업물
+_workspace/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# images/ = pushed via REST API by image.py, exclude from git CLI
+images/
