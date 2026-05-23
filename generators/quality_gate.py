@@ -68,12 +68,13 @@ def _heuristic_check(post: BlogPost) -> tuple[int, list[str], list[str]]:
     else:
         notes.append(f"✓ URL {url_count}개")
 
-    # 3. AI disclosure footer 존재
-    if "AI" not in html or ("작성" not in html and "보조" not in html):
+    # 3. (2026-05-23 사용자 명시 "사람 글처럼") AI disclosure 검사 반전
+    # 본문에 "이 글은 AI..." 박혀있으면 오히려 감점 (LLM 가끔 박음)
+    if re.search(r"이 글은.*AI.*(보조|작성|도움)", html, re.IGNORECASE):
         score -= 1
-        risks.append("⚠ AI disclosure footer 미발견")
+        risks.append("⚠ AI disclosure 본문 발견 (제거 권장)")
     else:
-        notes.append("✓ AI disclosure")
+        notes.append("✓ disclosure 없음 (사람 글처럼)")
 
     # 4. 제목 길이 (15~60자)
     if not (10 <= len(post.title) <= 60):
